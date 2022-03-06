@@ -6,28 +6,36 @@ The component also renders a "Delete Course" button that when clicked should sen
  This component also renders an "Update Course" button for navigating to the "Update Course" screen. 
 */
 
-import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useEffect, useState, useContext} from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { Context } from '../Context';
+
 
 // Get a course using the courses id 
 const CourseDetail = () => {
     const { id } = useParams();
     const [ course, setCourse ] = useState([]);
     const [ user, setUser ] = useState([]);
+    const context = useContext(Context);
 
     
-    const api = () => {
-        fetch(`http://localhost:5000/api/courses/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            setCourse(data);
-            setUser(data.User);
+    const getCourse = () => {
+        context.data.getCourse(id)
+        .then((response) => {
+            setCourse(response);
+            setUser(response.User);
         })
     };
 
+    const deleteCourse = () => {
+        fetch(`http://localhost:5000/api/courses/${id}`, {
+            method: 'DELETE'
+        }).then(() => console.log("deleted"))
+    }
+
     useEffect(() => {
-        api();
+        getCourse();
     },[]);
 
     
@@ -38,7 +46,7 @@ const CourseDetail = () => {
             <div className="actions--bar">
                 <div className="wrap">
                     <a className="button" href={`/api/courses/${id}/update`}>Update Course</a>
-                    <a className="button" href="/api/courses">Delete Course</a>
+                    <a className="button" onClick={(deleteCourse)}>Delete Course</a>
                     <a className="button button-secondary" href="/api/courses">Return to List</a>
                 </div>
             </div>

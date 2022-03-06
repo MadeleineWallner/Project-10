@@ -1,27 +1,26 @@
-/*
-This component provides the "Courses" screen 
-by retrieving the list of courses from the REST API's /api/courses route 
-and rendering a list of courses. 
-Each course needs to link to its respective "Course Detail" screen. 
-This component also renders a link to the "Create Course" screen. */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import { Context } from '../Context';
 
 
-// Retrieve all courses from the REST API
+
 const Courses = () => {
     const [coursesList, setCoursesList] = useState([]);
+    const context = useContext(Context);
 
-    const api = () => {
-        fetch("http://localhost:5000/api/courses")
-        .then((response) => response.json())
-        .then((dataArr) => {
-            setCoursesList(dataArr)
-        })
-    }
+// Retrieve all courses from the REST API and store the response in coursesList
+    const getCourses = () => {
+        context.data.getCourses()
+        .then((response) => {
+            setCoursesList(response)
+        });
+    };
+
+    console.log(Context)
+
 
     useEffect(() => {
-        api()
+        getCourses()
     },[]);
 
 
