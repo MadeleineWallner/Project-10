@@ -12,14 +12,15 @@ import ReactMarkdown from 'react-markdown';
 import { Context } from '../Context';
 
 
-// Get a course using the courses id 
+
 const CourseDetail = () => {
     const { id } = useParams();
     const [ course, setCourse ] = useState([]);
     const [ user, setUser ] = useState([]);
     const context = useContext(Context);
+    const history = useHistory();
 
-    
+// GET a course using the courses id 
     const getCourse = () => {
         context.data.getCourse(id)
         .then((response) => {
@@ -28,10 +29,12 @@ const CourseDetail = () => {
         })
     };
 
+// DELETE a course using the courses id. Redirect to the courses page.
     const deleteCourse = () => {
-        fetch(`http://localhost:5000/api/courses/${id}`, {
-            method: 'DELETE'
-        }).then(() => console.log("deleted"))
+        context.data.deleteCourse(id)
+            .then(() => console.log("deleted"))
+            .then(history.push('/api/courses'))
+        
     }
 
     useEffect(() => {

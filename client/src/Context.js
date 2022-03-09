@@ -3,14 +3,13 @@ import Data from './Data';
 
 export const Context = createContext();
 
-
 export class Provider extends Component {
 
-
+// New instance of the Data class    
     data = new Data();
     
     render(){
-
+// 
         const value = {
             data: this.data,
             actions: {
@@ -24,12 +23,12 @@ export class Provider extends Component {
                 {this.props.children}
             </Context.Provider>
         )
-
         
     }
     
 
 }
+
 export const Consumer = Context.Consumer;
 
 export default function withContext(Component){

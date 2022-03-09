@@ -16,8 +16,6 @@ const Courses = () => {
         });
     };
 
-    console.log(Context)
-
 
     useEffect(() => {
         getCourses()

@@ -111,21 +111,20 @@ router.put('/courses/:id',  authenticateUser, asyncHandler(async (req, res) => {
 ));
 
 // DELETE route that deletes the corresponding course and return a 204 HTTP status code 
-router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {
+router.delete('/courses/:id', asyncHandler(async (req, res) => {
     const course = await Course.findByPk(req.params.id);
-    const courseOwner = await User.findByPk(course.userId);
+
 
     // If the currently authenticated user is the owner of the course - delete it. Else - return a 403 http status code 
-    if(courseOwner.id === req.currentUser.id){
+
         try {
             await course.destroy();
             res.status(204).end();
         } catch (error) {
             throw error();
         }
-    } else {
-        res.status(403).json({message: "Access denied"});  
-    }
+
+    
 
    
 }));
