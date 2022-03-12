@@ -14,7 +14,8 @@ export class Provider extends Component {
             data: this.data,
             actions: {
                 getCourses: this.getCourses,
-                getCourse: this.getCourse
+                getCourse: this.getCourse,
+                cancel: this.cancel
             }
         }
 

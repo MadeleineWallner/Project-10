@@ -27,13 +27,10 @@ const app = () => (
     <Header />
       <Switch>
           <Route exact path="/api/courses" component={CoursesWithContext}/>
-          <Route path="/api/courses/:id" component={CourseDetailWithContext} />
+          <Route exact path="/api/courses/:id" component={CourseDetailWithContext} />
           <Route path="/api/signin" component={UserSignIn} />
           <Route path="/api/signup" component={UserSignUp} />
       </Switch>
-
-
-
   </Router>
 );
 

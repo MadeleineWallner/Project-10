@@ -1,6 +1,17 @@
+import { useHistory } from 'react-router-dom';
 
 const UserSignUp = () => {
+
+    const history = useHistory();
+
+    //Function to redirect the user to the courses page when clicking the cancel button
+    function cancel(e) {
+        e.preventDefault();
+        history.push('/api/courses')
+      }
+
     return(
+        
         <div className="form--centered">
             <h2>Sign Up</h2>
             <form>
@@ -13,7 +24,7 @@ const UserSignUp = () => {
                 <label htmlFor="password">Password</label>
                 <input id="password" name="password" type="password" value=""></input>
                 <button className="button" type="submit">Sign Up</button>
-                <button className="button button-secondary" href="/api/courses">Cancel</button>
+                <button className="button button-secondary" onClick={cancel}>Cancel</button>
             </form>
         </div>
     );
