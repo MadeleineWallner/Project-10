@@ -9,13 +9,14 @@ export class Provider extends Component {
     data = new Data();
     
     render(){
-// 
+
         const value = {
             data: this.data,
             actions: {
                 getCourses: this.getCourses,
                 getCourse: this.getCourse,
-                cancel: this.cancel
+                cancel: this.cancel,
+                signUp: this.signUp
             }
         }
 
