@@ -34,7 +34,8 @@ const UserSignUp = () => {
           }
       }
 
-      const signUp = () => {
+      const signUp = (e) => {
+            e.preventDefault();
 
           const user = {
               firstName,
@@ -68,7 +69,7 @@ const UserSignUp = () => {
         
         <div className="form--centered">
             <h2>Sign Up</h2>
-            <form onSubmit={signUp}>
+            <form onSubmit={(e) => signUp(e)}>
                 <label htmlFor="firstName">First Name</label>
                 <input id="firstName" name="firstName" type="text" value={firstName} onChange={change} ></input>
                 <label htmlFor="lastName" onChange={change} >Last Name</label>

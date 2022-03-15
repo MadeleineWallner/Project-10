@@ -12,11 +12,21 @@ export default class Data {
                 'Content-Type': 'application/json; charset=utf-8',
             },
         };
+
+        if (body !== null) {
+            options.body = JSON.stringify(body);
+          }
+      
+          if (requiresAuth) {    
+            const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+            options.headers['Authorization'] = `Basic ${encodedCredentials}`;
+          }
+          
         return fetch(url, options)
     }
 
     async getCourses(){
-        const response = await this.api(`/courses/`, 'GET', null, false, null);
+        const response = await this.api('/courses/', 'GET', null, false, null);
         if (response.status === 200){
             return response.json().then(data => data);
         } else if (response.status === 401) {
@@ -49,7 +59,7 @@ export default class Data {
     }
 
     async signUp(user){
-        const response = await this.api(`/users`, 'POST', user);
+        const response = await this.api('/users/', 'POST', user);
         if(response.status === 201){
             return [];
         } else if(response.status === 400){
