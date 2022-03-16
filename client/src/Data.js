@@ -16,12 +16,12 @@ export default class Data {
         if (body !== null) {
             options.body = JSON.stringify(body);
           }
-      
+      // Check if authentication is required. 
           if (requiresAuth) {    
             const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
             options.headers['Authorization'] = `Basic ${encodedCredentials}`;
           }
-          
+
         return fetch(url, options)
     }
 
@@ -71,6 +71,18 @@ export default class Data {
             throw new Error();
         }
     }
-    
-}
 
+    async createCourse(course){
+        const response = await this.api('/courses/', 'POST', course);
+        if (response.status === 201){
+            return [];
+        } else if (response.status === 400){
+            return response.json()
+            .then(data => {
+                return data.errors;
+            });
+        } else {
+            throw new Error();
+        }
+    }
+}

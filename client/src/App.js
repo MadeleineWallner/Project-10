@@ -1,8 +1,4 @@
 import React from 'react';
-import Context from './Context';
-
-
-
 
 import {
   BrowserRouter as Router,
@@ -16,20 +12,20 @@ import CourseDetail from './Components/CourseDetail';
 import Header from './Components/Header';
 import UserSignIn from './Components/UserSignIn';
 import UserSignUp from './Components/UserSignUp';
+import CreateCourse from './Components/CreateCourse';
 
-//Connects the Courses component to context
-const CoursesWithContext = Context(Courses);
-const CourseDetailWithContext = Context(CourseDetail);
 
 const app = () => (
   <Router>
 
     <Header />
       <Switch>
-          <Route exact path="/api/courses" component={CoursesWithContext}/>
-          <Route exact path="/api/courses/:id" component={CourseDetailWithContext} />
+          <Route exact path="/api/courses" component={Courses}/>
+          <Route exact path="/api/courses/:id" component={CourseDetail} />
+          <Route path="/api/create" component={CreateCourse} />
           <Route path="/api/signin" component={UserSignIn} />
           <Route path="/api/signup" component={UserSignUp} />
+          
       </Switch>
   </Router>
 );

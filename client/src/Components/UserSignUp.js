@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { Context } from '../Context';
 
-const UserSignUp = () => {
+function UserSignUp () {
 
     const history = useHistory();
     const context = useContext(Context);
@@ -45,16 +45,16 @@ const UserSignUp = () => {
           };
 
           context.data.signUp(user)
-              .then(response => {
-                if(response.errors){
+              .then(errors => {
+                if(errors.length){
                     setErrors(errors)
                 } else {
-                    console.log("kuk")
+                    console.log("kuk");
                 }
               })
               .catch((err) => {
-                  console.log(err)
-              })
+                  console.log(err);
+              });
       };
 
     //Function to redirect the user to the courses page

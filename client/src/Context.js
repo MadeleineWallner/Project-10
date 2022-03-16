@@ -1,4 +1,5 @@
 import React, {Component, createContext} from 'react';
+import CreateCourse from './Components/CreateCourse';
 import Data from './Data';
 
 export const Context = createContext();
@@ -16,7 +17,8 @@ export class Provider extends Component {
                 getCourses: this.getCourses,
                 getCourse: this.getCourse,
                 cancel: this.cancel,
-                signUp: this.signUp
+                signUp: this.signUp,
+                createCourse: this.createCourse
             }
         }
 
