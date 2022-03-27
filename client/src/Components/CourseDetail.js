@@ -33,13 +33,12 @@ const CourseDetail = () => {
     const deleteCourse = () => {
         context.data.deleteCourse(id)
             .then(() => console.log("deleted"))
-            .then(history.push('/api/courses'))
-        
+            .then(history.push('/api/courses'));
     }
 
     useEffect(() => {
         getCourse();
-    },[]);
+    });
 
     
 
@@ -58,7 +57,7 @@ const CourseDetail = () => {
                 <form>
                     <div className="main-flex">
                         <div>
-                            <h3 className="course--detail-title">Course</h3>
+                            <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
                             <p> By {user.firstName} {user.lastName}</p>
                             <ReactMarkdown>

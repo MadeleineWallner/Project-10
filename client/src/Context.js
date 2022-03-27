@@ -1,33 +1,57 @@
-import React, {Component, createContext} from 'react';
-import CreateCourse from './Components/CreateCourse';
+import React, { Component } from 'react';
 import Data from './Data';
+import Cookies from 'js-cookie';
 
-export const Context = createContext();
+export const Context = React.createContext();
 
 export class Provider extends Component {
 
-// New instance of the Data class    
-    data = new Data();
+    state = {
+        authenticatedUser: Cookies.getJSON('authenticatedUser') || null
+    };
+
+// New instance of the Data class 
+    constructor(){
+        super();
+        this.data = new Data();
+    }
+
     
     render(){
-
+        const { authenticatedUser } = this.state;
         const value = {
+            authenticatedUser,
             data: this.data,
             actions: {
-                getCourses: this.getCourses,
-                getCourse: this.getCourse,
-                cancel: this.cancel,
-                signUp: this.signUp,
-                createCourse: this.createCourse
-            }
-        }
+                signIn: this.signIn,
+                signOut: this.signOut 
+            },
+        };
 
         return(
             <Context.Provider value={value}>
                 {this.props.children}
             </Context.Provider>
-        )
+        );
         
+    }
+
+    signIn = async (emailAddress, password) => {
+        const user = await this.data.getUser(emailAddress, password);
+        if (user !== null){
+            this.setState(() => {
+                return {
+                    authenticatedUser: user,
+                };
+            });
+            Cookies.set('authenticatedUser', JSON.stringify(user), {expires: 1});
+        }
+        return user;
+    }
+
+    signOut = () => {
+        this.setState({authenticatedUser: null});
+        Cookies.remove('authenticatedUser');
     }
     
 

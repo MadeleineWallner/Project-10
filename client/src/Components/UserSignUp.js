@@ -44,12 +44,15 @@ function UserSignUp () {
               password,
           };
 
-          context.data.signUp(user)
+          context.data.createUser(user)
               .then(errors => {
                 if(errors.length){
                     setErrors(errors)
                 } else {
-                    console.log("kuk");
+                    context.actions.signIn(emailAddress, password)
+                    .then(() => {
+                        history.push('')
+                    })
                 }
               })
               .catch((err) => {

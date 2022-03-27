@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
+import { Context } from "../Context";
 
-export default class Header extends React.PureComponent{
-    render(){
+export default function Header() {
+
+    const context = useContext(Context);
+    const authUser = context.authenticatedUser;
+
         return(
             <header>
                 <div className="wrap header--flex">
@@ -9,6 +13,14 @@ export default class Header extends React.PureComponent{
                         <a href="/api/courses">Courses</a>
                     </h1>
                     <nav>
+                    {authUser ? (
+                        <React.Fragment>
+                        <ul className="header--signedin">
+                            <li>Welcome, {authUser.user.firstName}!</li>
+                            <li><a href="/api/signout/">Sign Out</a></li>
+                        </ul>  
+                        </React.Fragment>
+                    ) : (
                         <ul className="header--signedout">
                             <li>
                                 <a href="/api/signup">Sign Up</a>
@@ -17,11 +29,12 @@ export default class Header extends React.PureComponent{
                                 <a href="/api/signin">Sign In</a>
                             </li>
                         </ul>
+                    )}
+
                     </nav>
 
                 </div>
             </header>
             
         )
-    }
 }

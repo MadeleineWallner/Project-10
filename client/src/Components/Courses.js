@@ -19,7 +19,7 @@ const Courses = () => {
 
     useEffect(() => {
         getCourses()
-    },[]);
+    });
 
 
 // return all courses + link to "new course"

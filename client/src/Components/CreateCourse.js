@@ -6,7 +6,9 @@ function CreateCourse () {
    
     const history = useHistory();
     const context = useContext(Context);
-    console.log(context)
+    const user = context.authenticatedUser.user;
+  
+
 
     //Function to redirect the user to the courses page
     function cancel(e) {
@@ -14,20 +16,21 @@ function CreateCourse () {
        history.push('/api/courses');
     };
 
-    const [ courseTitle, setcourseTitle ] = useState('');
-    const [ courseDesc, setcourseDesc ] = useState('');
+    const [ title, setTitle ] = useState('');
+    const [ description, setDescription ] = useState('');
     const [ estimatedTime, setestimatedTime ] = useState('');
     const [ materialsNeeded, setmaterialsNeeded ] = useState('');
     const [ errors, setErrors ] = useState([]);
+    const userId = user.id;
 
     const change = (e) => {
         const value = e.target.value;
         switch(e.target.name){
           case "courseTitle":
-              setcourseTitle(value);
+              setTitle(value);
               break;
           case "courseDescription":
-              setcourseDesc(value);
+              setDescription(value);
               break;
           case "estimatedTime":
               setestimatedTime(value);
@@ -42,20 +45,26 @@ function CreateCourse () {
     const newCourse = (e) => {
         e.preventDefault();
 
+        const emailAddress = user.emailAddress;
+        const password = 'kg'
+
       const course = {
-          courseTitle,
-          courseDesc,
+          title,
+          description,
           estimatedTime,
-          materialsNeeded
+          materialsNeeded,
+          userId
       };
-
-
-      context.data.createCourse(course)
+  
+      
+      context.data.createCourse(course, emailAddress, password)
         .then(response => {
+            console.log(course)
+            console.log(response)
             if(response.errors){
                 setErrors(errors)
             } else {
-                console.log("kuk")
+                history.push('/api/courses')
             }
         })
         .catch((err) => {
@@ -71,10 +80,10 @@ function CreateCourse () {
                 <div className="main--flex">
                     <div>
                         <label htmlFor="courseTitle">Course Title</label>
-                        <input id="courseTitle" name="courseTitle" type="text" value={courseTitle} onChange={change} />
-                        <p>By Joe Smith</p>
+                        <input id="courseTitle" name="courseTitle" type="text" value={title} onChange={change} />
+                        <p>By {[`${user.firstName} ${user.lastName}`]}</p>
                         <label htmlFor="courseDescription" name="courseDescription">Course Description</label>
-                        <textarea id="courseDescription" name="courseDescription" value={courseDesc} onChange={change}></textarea>                       
+                        <textarea id="courseDescription" name="courseDescription" value={description} onChange={change}></textarea>                       
                     </div>
                     <div>
                         <label htmlFor="estimatedTime">Estimated Time</label>
