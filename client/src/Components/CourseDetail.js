@@ -19,26 +19,51 @@ const CourseDetail = () => {
     const [ user, setUser ] = useState([]);
     const context = useContext(Context);
     const history = useHistory();
+    const authenticatedUser = context.authenticatedUser;
 
-// GET a course using the courses id 
-    const getCourse = () => {
-        context.data.getCourse(id)
-        .then((response) => {
-            setCourse(response);
-            setUser(response.User);
-        })
-    };
+// GET a course using the courses id and store the response in course and user. If the course id doesn't exist view the not found page.
+    useEffect(() => {
+        const getCourse = () => {
+            context.data.getCourse(id)
+            .then((response) => {
+                if(response === null){
+                    history.push('/api/notfound')
+                } else {
+                    setCourse(response);
+                    setUser(response.User);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                history.push('/api/error/')
+            })
+        };
+        getCourse();
+    }, [context.data, id, history]);
 
 // DELETE a course using the courses id. Redirect to the courses page.
-    const deleteCourse = () => {
-        context.data.deleteCourse(id)
-            .then(() => console.log("deleted"))
-            .then(history.push('/api/courses'));
-    }
+const deleteCourse = () => {
+    context.data.deleteCourse(id)
+        .then(() => console.log("deleted"))
+        .then(history.push('/api/courses'))
 
-    useEffect(() => {
-        getCourse();
-    });
+}
+
+//View the 'Update Course' and 'Delete Course' buttons only if there is an authenticated user AND that user's id is the same as the owner of the course
+    const AuthUser = () => {
+        let buttons = null;
+        if(authenticatedUser && authenticatedUser.user.id === user.id){
+            buttons = (
+                <>
+                <a className="button" href={`/api/courses/${id}/update`}>Update Course</a>
+                <a className="button" href="# " onClick={(deleteCourse)}>Delete Course</a>
+                </>
+
+                
+            )
+        }
+        return buttons;
+    }
 
     
 
@@ -47,15 +72,14 @@ const CourseDetail = () => {
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    <a className="button" href={`/api/courses/${id}/update`}>Update Course</a>
-                    <a className="button" onClick={(deleteCourse)}>Delete Course</a>
+                    <AuthUser/>
                     <a className="button button-secondary" href="/api/courses">Return to List</a>
                 </div>
             </div>
             <div className="wrap">
                 <h2>Course Detail</h2>
                 <form>
-                    <div className="main-flex">
+                    <div className="main--flex">
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
@@ -63,7 +87,6 @@ const CourseDetail = () => {
                             <ReactMarkdown>
                                 {course.description}
                             </ReactMarkdown>
-                            
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>

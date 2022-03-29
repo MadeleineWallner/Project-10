@@ -51,7 +51,7 @@ function UserSignUp () {
                 } else {
                     context.actions.signIn(emailAddress, password)
                     .then(() => {
-                        history.push('')
+                        history.push('/api/courses/')
                     })
                 }
               })
@@ -66,12 +66,30 @@ function UserSignUp () {
            history.push('/api/courses');
         };
 
+        function ViewErrors ({errors}) {
+            let errorDisplay = null;
+            if(errors.length){
+                errorDisplay = (
+                    <div className="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                            {errors.map((error, i) => <li key={i}>{error}</li>)}
+                        </ul>
+                     </div>
+                )
+                
+            }
+            return errorDisplay;
+            
+        }
+
 
 
     return(
         
         <div className="form--centered">
             <h2>Sign Up</h2>
+            <ViewErrors errors={errors}/>
             <form onSubmit={(e) => signUp(e)}>
                 <label htmlFor="firstName">First Name</label>
                 <input id="firstName" name="firstName" type="text" value={firstName} onChange={change} ></input>

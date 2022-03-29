@@ -6,7 +6,7 @@ function CreateCourse () {
    
     const history = useHistory();
     const context = useContext(Context);
-    const user = context.authenticatedUser.user;
+    const authenticatedUser = context.authenticatedUser;
   
 
 
@@ -21,7 +21,7 @@ function CreateCourse () {
     const [ estimatedTime, setestimatedTime ] = useState('');
     const [ materialsNeeded, setmaterialsNeeded ] = useState('');
     const [ errors, setErrors ] = useState([]);
-    const userId = user.id;
+    const userId = authenticatedUser.user.id;
 
     const change = (e) => {
         const value = e.target.value;
@@ -45,8 +45,9 @@ function CreateCourse () {
     const newCourse = (e) => {
         e.preventDefault();
 
-        const emailAddress = user.emailAddress;
-        const password = 'kg'
+        const emailAddress = authenticatedUser.user.emailAddress;
+        const password = authenticatedUser.password
+
 
       const course = {
           title,
@@ -58,11 +59,10 @@ function CreateCourse () {
   
       
       context.data.createCourse(course, emailAddress, password)
-        .then(response => {
-            console.log(course)
-            console.log(response)
-            if(response.errors){
+        .then(errors => {
+            if(errors.length > 0){
                 setErrors(errors)
+                console.log(errors)
             } else {
                 history.push('/api/courses')
             }
@@ -72,16 +72,35 @@ function CreateCourse () {
         });
         }
 
+        function ViewErrors ({errors}) {
+            let errorDisplay = null;
+            if(errors.length){
+                errorDisplay = (
+                    <div className="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                            {errors.map((error, i) => <li key={i}>{error}</li>)}
+                        </ul>
+                     </div>
+                )
+                
+            }
+            return errorDisplay;
+            
+        }
+
+
     return(
         
         <div className="wrap">
             <h2>Create Course</h2>
+            <ViewErrors errors={errors}/> 
             <form onSubmit={newCourse}>
                 <div className="main--flex">
                     <div>
                         <label htmlFor="courseTitle">Course Title</label>
                         <input id="courseTitle" name="courseTitle" type="text" value={title} onChange={change} />
-                        <p>By {[`${user.firstName} ${user.lastName}`]}</p>
+                        <p>By {[`${authenticatedUser.user.firstName} ${authenticatedUser.user.lastName}`]}</p>
                         <label htmlFor="courseDescription" name="courseDescription">Course Description</label>
                         <textarea id="courseDescription" name="courseDescription" value={description} onChange={change}></textarea>                       
                     </div>
