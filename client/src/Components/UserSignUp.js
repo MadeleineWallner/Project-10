@@ -14,7 +14,7 @@ function UserSignUp () {
       const [ errors, setErrors ] = useState([]);
 
 
-      // Set the fields value to what the user types in
+
       const change = (e) => {
           const value = e.target.value;
           switch(e.target.name){
@@ -34,6 +34,7 @@ function UserSignUp () {
           }
       }
 
+      
       const signUp = (e) => {
             e.preventDefault();
 
@@ -44,14 +45,16 @@ function UserSignUp () {
               password,
           };
 
+// Create a new user from the values of the form fields
           context.data.createUser(user)
               .then(errors => {
                 if(errors.length){
                     setErrors(errors)
                 } else {
+                    //Sign in the new user and send them to the courses page
                     context.actions.signIn(emailAddress, password)
                     .then(() => {
-                        history.push('/api/courses/')
+                        history.push('/')
                     })
                 }
               })
@@ -60,12 +63,8 @@ function UserSignUp () {
               });
       };
 
-    //Function to redirect the user to the courses page
-        function cancel(e) {
-            e.preventDefault();
-           history.push('/api/courses');
-        };
 
+      // Show validation errors
         function ViewErrors ({errors}) {
             let errorDisplay = null;
             if(errors.length){
@@ -100,7 +99,7 @@ function UserSignUp () {
                 <label htmlFor="password">Password</label>
                 <input id="password" name="password" type="password" value={password} onChange={change} ></input>
                 <button className="button" type="submit">Sign Up</button>
-                <button className="button button-secondary" onClick={cancel}>Cancel</button>
+                <button className="button button-secondary" onClick={() => history.push('/')}>Cancel</button>
             </form>
         </div>
     );

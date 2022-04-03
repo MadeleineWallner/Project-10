@@ -1,7 +1,7 @@
 /*
 CourseDetail - This component provides the "Course Detail" screen 
-by retrieving the detail for a course from the REST API's /api/courses/:id route and rendering the course. 
-The component also renders a "Delete Course" button that when clicked should send a DELETE request to the REST API's /api/courses/:id route
+by retrieving the detail for a course from the REST API's /courses/:id route and rendering the course. 
+The component also renders a "Delete Course" button that when clicked should send a DELETE request to the REST API's /courses/:id route
  in order to delete a course. 
  This component also renders an "Update Course" button for navigating to the "Update Course" screen. 
 */
@@ -27,7 +27,7 @@ const CourseDetail = () => {
             context.data.getCourse(id)
             .then((response) => {
                 if(response === null){
-                    history.push('/api/notfound')
+                    history.push('/notfound')
                 } else {
                     setCourse(response);
                     setUser(response.User);
@@ -35,7 +35,7 @@ const CourseDetail = () => {
             })
             .catch((error) => {
                 console.error(error);
-                history.push('/api/error/')
+                history.push('/error/')
             })
         };
         getCourse();
@@ -45,7 +45,11 @@ const CourseDetail = () => {
 const deleteCourse = () => {
     context.data.deleteCourse(id)
         .then(() => console.log("deleted"))
-        .then(history.push('/api/courses'))
+        .then(history.push('/'))
+        .catch((error) => {
+            console.log(error);
+            history.push('/error/')
+        })
 
 }
 
@@ -55,7 +59,7 @@ const deleteCourse = () => {
         if(authenticatedUser && authenticatedUser.user.id === user.id){
             buttons = (
                 <>
-                <a className="button" href={`/api/courses/${id}/update`}>Update Course</a>
+                <a className="button" href={`/courses/${id}/update`}>Update Course</a>
                 <a className="button" href="# " onClick={(deleteCourse)}>Delete Course</a>
                 </>
 
@@ -73,7 +77,7 @@ const deleteCourse = () => {
             <div className="actions--bar">
                 <div className="wrap">
                     <AuthUser/>
-                    <a className="button button-secondary" href="/api/courses">Return to List</a>
+                    <a className="button button-secondary" href="/">Return to List</a>
                 </div>
             </div>
             <div className="wrap">

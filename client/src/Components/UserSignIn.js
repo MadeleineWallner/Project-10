@@ -13,8 +13,8 @@ const UserSignIn = () => {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(context)
 
+  // Sign in the user if they exist in the database then send them back to the page they came from  
         context.actions.signIn(emailAddress, password)
             .then((user) => {
                 if(user === null) {
@@ -30,13 +30,6 @@ const UserSignIn = () => {
     }
     
 
-    //redirect the user to the courses page
-    const cancel = (e) =>  {
-        e.preventDefault();
-        history.push('/api/courses')
-      }
-
-
         return (
             <div className="form--centered">
                 <h2>Sign In</h2>
@@ -46,10 +39,10 @@ const UserSignIn = () => {
                     <label htmlFor="password">Password</label>
                     <input id="pawssword" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
                     <button className="button" type="submit">Sign In</button>
-                    <button className="button button-secondary" onClick={cancel}>Cancel</button>
+                    <button className="button button-secondary" onClick={() => history.push('/')}>Cancel</button>
                 </form>
                     <p>Don't have a user account? Click here to 
-                    <a href="/api/signup"> sign up</a>
+                    <a href="/signup"> sign up</a>
                     !
                     </p>
                 </div>

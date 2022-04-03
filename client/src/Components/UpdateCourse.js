@@ -24,26 +24,22 @@ function UpdateCourse () {
             .then((response) => {
         // If the course doesn't exist - view the not found page    
                 if(response === null){
-                    history.push('/api/notfound');
+                    history.push('/notfound');
         // If the authenticated user is not the owner of the course - view the forbidden page            
                 } else if (userId !== response.User.id){
-                    history.push('/api/forbidden');
-        // Else - store the response in title and description              
+                    history.push('/forbidden');
+        // Else - store the response in state              
                 } else if (response !== null){
                     setTitle(response.title)
                     setDescription(response.description)
-        // Check if estimatedTime and materialsNeeded exist.                        
-                    if (estimatedTime){
-                        setestimatedTime(response.estimatedTime)
-                    }
-                    if (materialsNeeded){
-                        setmaterialsNeeded(response.materialsNeeded)
-                    }                
+                    setestimatedTime(response.estimatedTime)
+                    setmaterialsNeeded(response.materialsNeeded)
+                  
                 }                       
             })
         };
         getCourse();
-    }, [context.data, id, estimatedTime, materialsNeeded, history, userId]);
+    }, [context.data, id,  history, userId]);
 
     const change = (e) => {
         const value = e.target.value;
@@ -85,11 +81,12 @@ function UpdateCourse () {
             if(errors.length > 0){
                 setErrors(errors)
             } else {
-                history.push(`/api/courses/${id}`)
+                history.push(`/courses/${id}`)
             }
         })
         .catch((err) => {
             console.log(err)
+            history.push('/error/')
         });
         }
 
@@ -112,7 +109,7 @@ function UpdateCourse () {
 
         function cancel(e) {
             e.preventDefault();
-           history.push(`/api/courses/${id}`);
+           history.push(`/courses/${id}`);
         };
    
 

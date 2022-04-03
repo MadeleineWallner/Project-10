@@ -18,7 +18,7 @@ import UpdateCourse from './Components/UpdateCourse';
 import PrivateRoute from './PrivateRoute';
 import NotFound from './Components/NotFound';
 import Forbidden from './Components/Forbidden';
-import Error from './Components/Error'
+import UnhandledError from './Components/UnhandledError'
 
 
 
@@ -29,16 +29,15 @@ const App = () => {
 <Router>
     <Header />
       <Switch>
-          <Route exact path="/api/courses" component={Courses}/>
-          <PrivateRoute path="/api/courses/:id/update" component={UpdateCourse} />
-          <PrivateRoute path="/api/courses/create" component={CreateCourse} />
-          <Route path="/api/courses/:id" component={CourseDetail} />
-          <Route path="/api/signin" component={UserSignIn} />
-          <Route path="/api/signup" component={UserSignUp} />
-          <Route path="/api/signout" component={UserSignOut} />
-          <Route path="/api/notfound" component={NotFound} />
-          <Route path="/api/forbidden" component={Forbidden} />
-          <Route path="/api/error" component={Error} />
+          <Route exact path="/" component={Courses}/>
+          <PrivateRoute path="/courses/:id/update" component={UpdateCourse} />
+          <PrivateRoute path="/courses/create" component={CreateCourse} />
+          <Route path="/courses/:id" component={CourseDetail} />
+          <Route path="/signin" component={UserSignIn} />
+          <Route path="/signup" component={UserSignUp} />
+          <Route path="/signout" component={UserSignOut} />
+          <Route exact path="/forbidden" component={Forbidden} />
+          <Route exact path="/error" component={UnhandledError} />
           <Route component={NotFound} />
       </Switch>
   </Router>

@@ -10,12 +10,6 @@ function CreateCourse () {
   
 
 
-    //Function to redirect the user to the courses page
-    function cancel(e) {
-        e.preventDefault();
-       history.push('/api/courses');
-    };
-
     const [ title, setTitle ] = useState('');
     const [ description, setDescription ] = useState('');
     const [ estimatedTime, setestimatedTime ] = useState('');
@@ -23,6 +17,7 @@ function CreateCourse () {
     const [ errors, setErrors ] = useState([]);
     const userId = authenticatedUser.user.id;
 
+// Update state with what the user has typed into the form
     const change = (e) => {
         const value = e.target.value;
         switch(e.target.name){
@@ -42,6 +37,7 @@ function CreateCourse () {
         };
     };
 
+
     const newCourse = (e) => {
         e.preventDefault();
 
@@ -57,21 +53,23 @@ function CreateCourse () {
           userId
       };
   
-      
+// Create a new course       
       context.data.createCourse(course, emailAddress, password)
         .then(errors => {
             if(errors.length > 0){
                 setErrors(errors)
                 console.log(errors)
             } else {
-                history.push('/api/courses')
+                history.push('/')
             }
         })
         .catch((err) => {
             console.log(err)
+            history.push('/error/')
         });
         }
 
+        // Show validation errors
         function ViewErrors ({errors}) {
             let errorDisplay = null;
             if(errors.length){
@@ -112,7 +110,7 @@ function CreateCourse () {
                     </div>
                 </div>
                 <button className="button" type="submit">Create Course</button>
-                <button className="button button-secondary" onClick={cancel}>Cancel</button> 
+                <button className="button button-secondary" onClick={() => history.push('/') }>Cancel</button> 
             </form>
         </div>
     );

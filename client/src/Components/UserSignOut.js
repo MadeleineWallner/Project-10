@@ -8,7 +8,7 @@ const UserSignOut = () => {
         context.actions.signOut());
 
     return (
-        <Redirect to="/api/courses" />
+        <Redirect to="/" />
     );
 }
 

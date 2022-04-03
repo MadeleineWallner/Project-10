@@ -10,23 +10,23 @@ export default function Header() {
             <header>
                 <div className="wrap header--flex">
                     <h1 className="header--logo">
-                        <a href="/api/courses">Courses</a>
+                        <a href="/">Courses</a>
                     </h1>
                     <nav>
                     {authUser ? (
                         <React.Fragment>
                         <ul className="header--signedin">
-                            <li>Welcome, {authUser.user.firstName}!</li>
-                            <li><a href="/api/signout/">Sign Out</a></li>
+                            <li>{authUser.user.firstName} {authUser.user.lastName}</li>
+                            <li><a href="/signout/">Sign Out</a></li>
                         </ul>  
                         </React.Fragment>
                     ) : (
                         <ul className="header--signedout">
                             <li>
-                                <a href="/api/signup">Sign Up</a>
+                                <a href="/signup">Sign Up</a>
                             </li>
                             <li>
-                                <a href="/api/signin">Sign In</a>
+                                <a href="/signin">Sign In</a>
                             </li>
                         </ul>
                     )}
