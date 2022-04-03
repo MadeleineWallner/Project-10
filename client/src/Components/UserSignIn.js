@@ -18,21 +18,39 @@ const UserSignIn = () => {
         context.actions.signIn(emailAddress, password)
             .then((user) => {
                 if(user === null) {
-                    setErrors(['Sign-in was unsuccesful']);
+                    setErrors(['Incorrect email address or password']);
                 } else {
                     history.goBack()
                 }
             })
             .catch((error) => {
                 console.error(error);
-                
+                history.push('/error')
             })
+    }
+
+     // Show validation errors
+     function ViewErrors ({errors}) {
+        let errorDisplay = null;
+        if(errors.length){
+            errorDisplay = (
+                <div className="validation--errors">
+                    <ul>
+                        {errors.map((error, i) => <li key={i}>{error}</li>)}
+                    </ul>
+                 </div>
+            )
+            
+        }
+        return errorDisplay;
+        
     }
     
 
         return (
             <div className="form--centered">
                 <h2>Sign In</h2>
+                <ViewErrors errors={errors}/> 
                 <form onSubmit={submit}>
                     <label htmlFor="emailAddress">Email Address</label>
                     <input id="emailAddress" name="emailAddress" type="email" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)}></input>
