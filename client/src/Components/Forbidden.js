@@ -1,5 +1,4 @@
 
-
 const Forbidden = () => {
     return (
         <div className="wrap">

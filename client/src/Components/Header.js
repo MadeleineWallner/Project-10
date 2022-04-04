@@ -6,6 +6,9 @@ export default function Header() {
     const context = useContext(Context);
     const authUser = context.authenticatedUser;
 
+    // If there is no authenticated user - view the "sign in" and "sign up" buttons
+    // If there is an authenticated user - view the users name and a "sign out" button
+
         return(
             <header>
                 <div className="wrap header--flex">

@@ -1,4 +1,5 @@
 
+// If the REST API return a "500 Internal Server Error" http status code
 const UnhandledError = () => {
     return (
         <div className="wrap">

@@ -17,7 +17,7 @@ function CreateCourse () {
     const [ errors, setErrors ] = useState([]);
     const userId = authenticatedUser.user.id;
 
-// Update state with what the user has typed into the form
+// Update state with what the user has entered into the form
     const change = (e) => {
         const value = e.target.value;
         switch(e.target.name){
@@ -53,7 +53,7 @@ function CreateCourse () {
           userId
       };
   
-// Create a new course       
+// Create a new course using the values from the form + the authenticated users email and password        
       context.data.createCourse(course, emailAddress, password)
         .then(errors => {
             if(errors.length > 0){

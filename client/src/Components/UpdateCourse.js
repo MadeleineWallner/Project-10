@@ -41,6 +41,7 @@ function UpdateCourse () {
         getCourse();
     }, [context.data, id,  history, userId]);
 
+    // Update state with what the user has entered into the form
     const change = (e) => {
         const value = e.target.value;
         switch(e.target.name){
@@ -75,7 +76,7 @@ function UpdateCourse () {
         };
 
 
-
+// Update course using the values from the form, course id and the authenticated users email and password. If successful - redirect the user to the course detail page
         context.data.updateCourse(course, id, emailAddress, password)
         .then(errors => {
             if(errors.length > 0){
@@ -90,6 +91,7 @@ function UpdateCourse () {
         });
         }
 
+// Show validation errors (if there is any)        
         function ViewErrors ({errors}) {
             let errorDisplay = null;
             if(errors.length){
@@ -107,6 +109,7 @@ function UpdateCourse () {
             
         }
 
+    // Function to redirect the user to the course detail page 
         function cancel(e) {
             e.preventDefault();
            history.push(`/courses/${id}`);

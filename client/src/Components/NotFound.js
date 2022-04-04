@@ -1,5 +1,5 @@
 
-
+// If the user tries to access a page that doesn't exist. 
 const NotFound = () => {
     return (
         <div className="wrap">

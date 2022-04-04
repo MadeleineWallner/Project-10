@@ -14,7 +14,7 @@ function UserSignUp () {
       const [ errors, setErrors ] = useState([]);
 
 
-
+// Update state with what the user has entered into the form
       const change = (e) => {
           const value = e.target.value;
           switch(e.target.name){
@@ -64,7 +64,7 @@ function UserSignUp () {
       };
 
 
-      // Show validation errors
+      // Show validation errors (if there is any)    
         function ViewErrors ({errors}) {
             let errorDisplay = null;
             if(errors.length){

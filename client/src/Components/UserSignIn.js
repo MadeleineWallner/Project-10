@@ -29,7 +29,7 @@ const UserSignIn = () => {
             })
     }
 
-     // Show errors
+     // Show validation errors (if there is any)    
      function ViewErrors ({errors}) {
         let errorDisplay = null;
         if(errors.length){
