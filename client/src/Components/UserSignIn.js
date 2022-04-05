@@ -2,13 +2,14 @@ import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Context } from '../Context';
 
-const UserSignIn = () => {
+const UserSignIn = (props) => {
 
         const [ emailAddress, setEmailAddress ] = useState('');
         const [ password, setPassword ] = useState('');
         const [ errors, setErrors ] = useState([]);
         const history = useHistory();
         const context = useContext(Context);
+        const { from } = props.location.state || { from: { pathname: '/' } };
 
 
     const submit = (e) => {
@@ -20,7 +21,8 @@ const UserSignIn = () => {
                 if(user === null) {
                     setErrors(['Incorrect email address or password']);
                 } else {
-                    history.goBack()
+                    history.push(from)
+              
                 }
             })
             .catch((error) => {

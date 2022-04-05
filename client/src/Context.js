@@ -11,8 +11,8 @@ export class Provider extends Component {
     };
 
 // New instance of the Data class 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.data = new Data();
     }
 

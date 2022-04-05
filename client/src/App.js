@@ -15,7 +15,7 @@ import UserSignUp from './Components/UserSignUp';
 import UserSignOut from './Components/UserSignOut';
 import CreateCourse from './Components/CreateCourse';
 import UpdateCourse from './Components/UpdateCourse';
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from './Components/PrivateRoute';
 import NotFound from './Components/NotFound';
 import Forbidden from './Components/Forbidden';
 import UnhandledError from './Components/UnhandledError'
@@ -36,6 +36,7 @@ const App = () => {
           <Route path="/signin" component={UserSignIn} />
           <Route path="/signup" component={UserSignUp} />
           <Route path="/signout" component={UserSignOut} />
+          <Route path="/notfound" component={NotFound}/>
           <Route exact path="/forbidden" component={Forbidden} />
           <Route exact path="/error" component={UnhandledError} />
           <Route component={NotFound} />
